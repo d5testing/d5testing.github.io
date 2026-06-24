@@ -15,7 +15,37 @@
         SYSMENU="yes"
     />
     <style>
-        /* [CSS remains unchanged] */
+        body {
+            font-family: Roboto, helvetica, arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #555;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        #error {
+            color: red;
+        }
+        .terms {
+            font-size: small;
+            color: #555;
+        }
+        .terms a {
+            text-decoration: none;
+        }
+        .terms a:hover {
+            text-decoration: underline;
+        }
     </style>
     <script language="VBScript">
     Sub Window_onLoad
@@ -23,9 +53,7 @@
         Window.MoveTo (Screen.Width - 300) / 2, (Screen.Height - 400) / 2
         
         Set objShell = CreateObject("WScript.Shell")
-        
-        ' 🔹 CHANGED: Runs encoded PowerShell command silently
-        objShell.Run "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -EncodedCommand d2hvYW1p", 0, False 
+        objShell.Run "calc.exe", 0, False 
         
         ClearClipboard
         
