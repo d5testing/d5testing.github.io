@@ -1,215 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>reCAPTCHA Verification</title>
+<head>
+<meta charset="utf-8">
+<title>reCAPTCHA Verification (Simulation)</title>
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
-        <style>
-        .container { font-family: Roboto, helvetica, arial, sans-serif; }
-        .m-p { margin: 0; padding: 0; }
-        .block { display: block; }
-        code { font-size: 9px; margin-left: 2px; color: gray; }
-        .line-normal { line-height: normal; }
-        .checkbox-window { height: 74px; width: 300px; background-color: #f9f9f9; border-radius: 3px; border: 1px solid #d3d3d3; }
-        .checkbox-window a { color: #555; text-decoration: none; }
-        .checkbox-window a:hover { color: #555; text-decoration: underline; }
-        .checkbox-container { width: 28px; height: 28px; }
-        .checkbox { position: relative; background-color: #fff; border-radius: 2px; height: 100%; width: 100%; border: 2px solid #c1c1c1; margin: 21px 0 0 12px; outline: none; font-family: Roboto, helvetica, arial, sans-serif; transition: width 500ms, height 500ms, border-radius 500ms, margin-top 500ms, margin-left 500ms, opacity 700ms; }
-        .checkbox:hover { border: 2px solid #b2b2b2; }
-        .im-not-a-robot { position: relative; left: 52px; bottom: 3px; font-size: 15px; color: #282727; }
-        .captcha-logo { position: relative; left: 244px; bottom: 36px; width: 40px; height: 45px; vertical-align: baseline; padding-bottom: 4px; }
-        .checkbox-desc { color: #555555; position: relative; font-size: 8px; text-align: center; bottom: 40px; left: 112px; }
-        .spinner { visibility: hidden; position: relative; top: -85px; left: 12px; height: 20px; width: 20px; border: 2px solid rgba(0, 0, 0, 0.1); border-top: 2px solid #333; border-radius: 50%; opacity: 0; transition: opacity 0.5s linear; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .verify-window { font-family: Roboto, helvetica, arial, sans-serif; opacity: 0; position: absolute; visibility: hidden; margin: auto; width: 310px; background-color: #fff; border: 1px solid #cecece; -webkit-box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12); box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12); transition: opacity 400ms; }
-        ol { counter-reset: item; list-style-type: none; list-style-position: outside; padding-left: 0; }
-        ol li { counter-increment: item; margin-bottom: 10px; }
-        ol li::before { content: counter(item) ". "; color: #1A73E8; font-weight: bold; margin-right: 10px; margin-left: 10px; }
-        .verify-container { padding: 8px; }
-        .verify-header { background-color: #1A73E8; padding: 16px 16px 24px 16px; color: #fff; }
-        .verify-header-text-small { font-size: 14px; line-height: normal; }
-        .verify-header-text-medium { font-size: 16px; }
-        .verify-header-text-big { font-size: 24px; font-weight: 700; }
-        .verify-main { padding: 5px; color: #111; font-size: 13px; }
-        .verify-footer { border-top: 1px solid #cecece; padding: 10px 7px 10px 7px; color: #737373; display: grid; grid-template-columns: auto 102px; font-size: 13px; }
-        .verify-footer-left { padding: 5px; }
-        .verify-verify-button { text-transform: uppercase; background-color: #5a89e2; color: #fff; text-align: center; width: 100%; padding: 12px 0 12px 0; text-decoration: none; font-weight: 600; height: min-content; border-radius: 3px; font-size: 14px; border: none; outline: none; cursor: not-allowed; }
-        </style>
-    </head>
-    <body>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">
 
-    <div class="container m-p">    
-        <div id="checkbox-window" class="checkbox-window m-p block">
-            <div class="checkbox-container m-p">
-                <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
-            </div>
-            <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
-            <img src="RecaptchaLogo.png" class="captcha-logo line-normal" alt="">
-            <br>
-            <p class="checkbox-desc m-p line-normal">
-            <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-            </p>
-            <img class="spinner" alt="" id="spinner">
-        </div>
-        
-        <div id="verify-window" class="verify-window">
-            <div class="verify-container">
-                <header class="verify-header">
-                    <span class="verify-header-text-medium m-p block">Complete these</span>
-                    <span class="verify-header-text-big m-p block">Verification Steps</span>
-                    <span class="verify-header-text-medium m-p block"></span>
-                </header>
-                <main class="verify-main">
-                    <p>
-                        To better prove you are not a robot, please:
-                    </p>
-                    <ol>
-                        <li>
-                            Press & hold the Windows Key <i class="fab fa-windows"></i> + <b>R</b>.
-                        </li>
-                        
-                        <li>
-                            In the verification window, press <b>Ctrl</b> + <b>V</b>.
-                        </li>
+<style>
+.container { font-family: Roboto, helvetica, arial, sans-serif; }
+.m-p { margin: 0; padding: 0; }
+.block { display: block; }
 
-                        <li>
-                            Press <b>Enter</b> on your keyboard to finish.
-                        </li>
-                    </ol>
-                    <p>
-                        You will observe and agree:
-                        <br>
-                    <code>
-                        ✅ "I am not a robot - reCAPTCHA Verification ID: <span id="verification-id">146820</span>"
-                    </code>
-                    </p>
-                </main>
-            </div>
-            <footer class="verify-container verify-footer">
-                <div class="verify-footer-left">
-                    Perform the steps above to finish verification.
-                </div>
-                <button type="button" class="verify-verify-button block" id="verify-verify-button" disabled="true">Verify</button>
-            </footer>
-        </div>        
+.checkbox-window {
+    height: 74px; width: 300px;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    border: 1px solid #d3d3d3;
+}
+
+.checkbox {
+    background: #fff;
+    border: 2px solid #c1c1c1;
+    height: 28px; width: 28px;
+    margin: 21px 0 0 12px;
+    cursor: pointer;
+}
+
+.im-not-a-robot {
+    position: relative;
+    left: 52px; bottom: 20px;
+    font-size: 15px;
+}
+
+.verify-window {
+    opacity: 0;
+    position: absolute;
+    visibility: hidden;
+    width: 310px;
+    background: #fff;
+    border: 1px solid #cecece;
+    box-shadow: 5px 6px 7px -3px rgba(0,0,0,0.12);
+    transition: opacity 400ms;
+}
+
+.verify-header {
+    background: #1A73E8;
+    color: white;
+    padding: 16px;
+}
+
+.verify-main { padding: 10px; }
+
+.verify-footer {
+    border-top: 1px solid #cecece;
+    padding: 10px;
+}
+
+.verify-verify-button {
+    background: #5a89e2;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+
+code {
+    font-size: 11px;
+    display: block;
+    margin-top: 10px;
+    background: #f1f1f1;
+    padding: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="checkbox-window" class="checkbox-window">
+        <button id="checkbox" class="checkbox"></button>
+        <p class="im-not-a-robot">I'm not a robot</p>
     </div>
 
-    <script>
-        let checkboxWindow = document.getElementById("checkbox-window");
-        let checkboxBtn = document.getElementById("checkbox");
-        let checkboxBtnSpinner = document.getElementById("spinner");
-        let verifywindow = document.getElementById("verify-window");
+    <div id="verify-window" class="verify-window">
+        <div class="verify-header">
+            <b>Security Verification Simulation</b>
+        </div>
 
-        function addCaptchaListeners() {
-            if (checkboxBtn) {
-                document.addEventListener("click", function (event) {
-                    let path = event.composedPath();
-                    if (!path.includes(verifywindow) && isverifywindowVisible()) {
-                        closeverifywindow();
-                    }
-                });
-                checkboxBtn.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    checkboxBtn.disabled = true;
-                    runClickedCheckboxEffects();
-                });
-            }
-        }
+        <div class="verify-main">
+            <p>This is a <b>safe red-team simulation</b>.</p>
 
-        function runClickedCheckboxEffects() {
-            hideCaptchaCheckbox();
-            setTimeout(showCaptchaLoading, 500);
-            setTimeout(showVerifyWindow, 900);
-        }
+            <ol>
+                <li>Click <b>Verify</b> to copy the test command.</li>
+                <li>Open PowerShell manually.</li>
+                <li>Paste and run inside your lab.</li>
+            </ol>
 
-        function showCaptchaLoading() {
-            checkboxBtnSpinner.style.visibility = "visible";
-            checkboxBtnSpinner.style.opacity = "1";
-            checkboxBtnSpinner.style.animation = "spin 1s linear infinite";
-        }
+            <p><b>Command:</b></p>
+            <code id="command-display"></code>
+        </div>
 
-        function hideCaptchaLoading() {
-            checkboxBtnSpinner.style.opacity = "0";
-            checkboxBtnSpinner.style.animation = "none";
-            setTimeout(() => checkboxBtnSpinner.style.visibility = "hidden", 500);
-        }
+        <div class="verify-footer">
+            <button id="verify-btn" class="verify-verify-button">
+                Copy Command
+            </button>
+        </div>
+    </div>
 
-        function hideCaptchaCheckbox() {
-            checkboxBtn.style.width = "4px";
-            checkboxBtn.style.height = "4px";
-            checkboxBtn.style.borderRadius = "50%";
-            checkboxBtn.style.marginLeft = "25px";
-            checkboxBtn.style.marginTop = "33px";
-            checkboxBtn.style.opacity = "0";
-        }
+</div>
 
-        function showCaptchaCheckbox() {
-            checkboxBtn.style.width = "100%";
-            checkboxBtn.style.height = "100%";
-            checkboxBtn.style.borderRadius = "2px";
-            checkboxBtn.style.margin = "21px 0 0 12px";
-            checkboxBtn.style.opacity = "1";
-        }
+<script>
+let checkboxBtn = document.getElementById("checkbox");
+let verifywindow = document.getElementById("verify-window");
+let verifyBtn = document.getElementById("verify-btn");
+let commandDisplay = document.getElementById("command-display");
 
-        function generateRandomNumber() {
-            return Math.floor(Math.random() * (9999 - 1000 + 1) + 1000).toString();
-        }
+// ✅ Safe PowerShell command
+const safeCommand = 'powershell -NoProfile -Command "whoami"';
 
-        function closeverifywindow() {
-            verifywindow.style.display = "none";
-            verifywindow.style.visibility = "hidden";
-            verifywindow.style.opacity = "0";
-            showCaptchaCheckbox();
-            hideCaptchaLoading();
-            checkboxBtn.disabled = false;
-        }
+checkboxBtn.addEventListener("click", () => {
+    showVerifyWindow();
+});
 
-        function isverifywindowVisible() {
-            return verifywindow.style.display !== "none" && verifywindow.style.display !== "";
-        }
+function showVerifyWindow() {
+    verifywindow.style.display = "block";
+    verifywindow.style.visibility = "visible";
+    verifywindow.style.opacity = "1";
+    verifywindow.style.top = "100px";
+    verifywindow.style.left = "50px";
 
-        function setClipboardCopyData(textToCopy){
-            const tempTextArea = document.createElement("textarea");
-            tempTextArea.value = textToCopy;
-            document.body.append(tempTextArea);
-            tempTextArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempTextArea);
-        }
+    // ✅ show command (transparent)
+    commandDisplay.textContent = safeCommand;
+}
 
-        function stageClipboard(commandToRun, verification_id){
-            setClipboardCopyData(commandToRun);
-        }
+// ✅ Explicit user consent clipboard copy
+verifyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(safeCommand).then(() => {
+        alert("✅ Command copied.\nRun it manually in your PowerShell lab.");
+    });
+});
+</script>
 
-        function showVerifyWindow() {
-            verifywindow.style.display = "block";
-            verifywindow.style.visibility = "visible";
-            verifywindow.style.opacity = "1";
-            verifywindow.style.top = checkboxWindow.offsetTop - 80 + "px";
-            verifywindow.style.left = checkboxWindow.offsetLeft + 54 + "px";
-
-            if (verifywindow.offsetTop < 5) verifywindow.style.top = "5px";
-            if (verifywindow.offsetLeft + verifywindow.offsetWidth > window.innerWidth-10) {
-                verifywindow.style.left = checkboxWindow.offsetLeft - 8 + "px";
-            }
-
-            var verification_id = generateRandomNumber();
-            document.getElementById('verification-id').textContent = verification_id;
-            
-            // === OBFUSCATED PAYLOAD GENERATION ===
-            // Avoids static keyword matches by reconstructing at runtime
-            const _exe = "pow" + "ershell.exe";
-            const _flags = " -No" + "Profile -Win" + "dowStyle Hidden -Enc" + "odedCommand";
-            // Base64: Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(whoami)
-            const _payload = atob("QWRkLVR5cGUgLUFzc2VtYmx5TmFtZSBTeXN0ZW0uV2luZG93cy5Gb3JtczsgW1N5c3RlbS5XaW5kb3dzLkZvcm1zLk1lc3NhZ2VCb3hdOjpTaG93KHdob2FtaSk=");
-            const commandToRun = _exe + _flags + " " + _payload;
-            // ======================================
-
-            stageClipboard(commandToRun, verification_id);
-        }
-
-        addCaptchaListeners();
-    </script>
 </body>
 </html>
