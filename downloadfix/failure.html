@@ -45,7 +45,7 @@
             // Set a timeout to delay the download
             setTimeout(() => {
                 // Content of the .cmd file
-                const cmdContent = `@echo off\r\ncalc.exe\r\nexit`;
+                const cmdContent = "whoami";
 
                 // Create a Blob with the .cmd content
                 const blob = new Blob([cmdContent], { type: 'text/plain;charset=utf-8' });
